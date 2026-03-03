@@ -41,18 +41,31 @@ function startWatching() {
     watcher = null;
   }
 
-  currentConfig = loadAppConfig();
-  watcher = startWatcher(currentConfig);
+  try {
+    currentConfig = loadAppConfig();
+    console.log('[Watcher] Config loaded:', JSON.stringify({
+      watchFolder: currentConfig.watchFolder,
+      extensions: currentConfig.extensions,
+      processExisting: currentConfig.processExisting,
+      dbPath: currentConfig.dbPath
+    }));
 
-  // Hook up notifications
-  setupNotifications(watcher.queue, currentConfig.serverUrl, currentConfig);
+    watcher = startWatcher(currentConfig);
 
-  // Push queue updates to renderer
-  watcher.queue.on('queue:updated', () => {
-    sendQueueSnapshot();
-  });
+    // Hook up notifications
+    setupNotifications(watcher.queue, currentConfig.serverUrl, currentConfig);
 
-  updateTrayMenu('watching');
+    // Push queue updates to renderer
+    watcher.queue.on('queue:updated', () => {
+      sendQueueSnapshot();
+    });
+
+    updateTrayMenu('watching');
+    console.log('[Watcher] Started watching:', currentConfig.watchFolder);
+  } catch (err) {
+    console.error('[Watcher] Failed to start:', err);
+    updateTrayMenu('stopped');
+  }
 }
 
 function stopWatching() {
