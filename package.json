@@ -1,0 +1,23 @@
+{
+  "name": "audio-watcher",
+  "version": "2.0.0",
+  "description": "Folder watcher that detects new video files, extracts audio, and uploads to transcription server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "start:electron": "electron electron/main.js",
+    "build:win": "electron-builder --win",
+    "dev:ui": "node dev-server.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^11.10.0",
+    "chokidar": "^3.6.0",
+    "form-data": "^4.0.0",
+    "node-fetch": "^2.7.0"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  }
+}

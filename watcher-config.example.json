@@ -1,0 +1,12 @@
+{
+  "watchFolder": "~/Videos",
+  "serverUrl": "http://localhost:3000",
+  "extensions": [".mp4", ".mkv", ".webm", ".flv", ".mov", ".avi"],
+  "deleteWavAfterUpload": true,
+  "pollingInterval": 5000,
+  "stabilizationDelay": 3000,
+  "maxConcurrent": 1,
+  "maxRetries": 5,
+  "minDiskSpaceGB": 2,
+  "processExisting": false
+}
