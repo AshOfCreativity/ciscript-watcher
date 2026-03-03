@@ -1,15 +1,34 @@
 {
-  "name": "audio-watcher",
+  "name": "ciscript-watcher",
   "version": "2.0.0",
   "description": "Folder watcher that detects new video files, extracts audio, and uploads to transcription server",
-  "main": "index.js",
+  "main": "electron/main.js",
+  "author": "AshOfCreativity",
   "scripts": {
     "start": "node index.js",
     "start:electron": "electron electron/main.js",
-    "build:win": "electron-builder --win",
+    "build:win": "electron-builder --win --publish never",
     "dev:ui": "node dev-server.js"
   },
   "license": "MIT",
+  "build": {
+    "appId": "com.ciscript.watcher",
+    "productName": "CIScript Watcher",
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false
+    },
+    "files": [
+      "electron/**/*",
+      "lib/**/*",
+      "index.js",
+      "node_modules/**/*"
+    ],
+    "extraResources": []
+  },
   "dependencies": {
     "better-sqlite3": "^11.10.0",
     "chokidar": "^3.6.0",
