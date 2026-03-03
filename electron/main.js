@@ -1,4 +1,5 @@
 const { app, Tray, Menu, BrowserWindow, ipcMain, dialog, nativeImage } = require('electron');
+const { autoUpdater } = require('electron-updater');
 const path = require('path');
 const fs = require('fs');
 const { loadConfig, saveConfig } = require('../lib/config');
@@ -225,6 +226,9 @@ app.on('ready', () => {
 
   // Open main window on launch so user sees the queue
   openMainWindow();
+
+  // Check for updates
+  autoUpdater.checkForUpdatesAndNotify();
 });
 
 // Prevent app from closing when all windows close (tray app)
