@@ -132,15 +132,38 @@ async function selectWorkflow(name) {
 
 // Add workflow
 $('btnAddWorkflow').addEventListener('click', async () => {
-  const name = prompt('Workflow name:');
-  if (!name || !name.trim()) return;
-  const result = await window.watcherAPI.addWorkflow({ name: name.trim() });
-  if (result && result.error) {
-    alert('Failed to create workflow: ' + result.error);
-    return;
+  // Show inline input in the sidebar
+  const list = $('workflowList');
+  const inputRow = document.createElement('div');
+  inputRow.style.cssText = 'padding:8px 16px;display:flex;gap:6px;';
+  inputRow.innerHTML = `
+    <input type="text" id="newWfName" placeholder="Workflow name" style="flex:1;padding:5px 8px;background:#16213e;border:1px solid #4a6fa5;border-radius:4px;color:#e0e0e0;font-size:13px;outline:none;">
+    <button id="newWfOk" style="padding:5px 8px;background:#22c55e;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:12px;">OK</button>
+    <button id="newWfCancel" style="padding:5px 8px;background:#333;color:#e0e0e0;border:none;border-radius:4px;cursor:pointer;font-size:12px;">X</button>
+  `;
+  list.prepend(inputRow);
+  const input = $('newWfName');
+  input.focus();
+
+  async function submit() {
+    const name = input.value.trim();
+    if (!name) { inputRow.remove(); return; }
+    const result = await window.watcherAPI.addWorkflow({ name });
+    inputRow.remove();
+    if (result && result.error) {
+      console.error('Failed to create workflow:', result.error);
+      return;
+    }
+    await loadWorkflows();
+    await selectWorkflow(name);
   }
-  await loadWorkflows();
-  await selectWorkflow(name.trim());
+
+  $('newWfOk').addEventListener('click', submit);
+  $('newWfCancel').addEventListener('click', () => inputRow.remove());
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') submit();
+    if (e.key === 'Escape') inputRow.remove();
+  });
 });
 
 // Start/Stop all
