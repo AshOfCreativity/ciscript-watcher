@@ -134,7 +134,11 @@ async function selectWorkflow(name) {
 $('btnAddWorkflow').addEventListener('click', async () => {
   const name = prompt('Workflow name:');
   if (!name || !name.trim()) return;
-  await window.watcherAPI.addWorkflow({ name: name.trim() });
+  const result = await window.watcherAPI.addWorkflow({ name: name.trim() });
+  if (result && result.error) {
+    alert('Failed to create workflow: ' + result.error);
+    return;
+  }
   await loadWorkflows();
   await selectWorkflow(name.trim());
 });

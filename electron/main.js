@@ -215,12 +215,17 @@ ipcMain.handle('get-workflows', () => {
 });
 
 ipcMain.handle('add-workflow', (_event, workflow) => {
-  const config = currentConfig || loadAppConfig();
-  const merged = { ...WORKFLOW_DEFAULTS, ...workflow };
-  config.workflows.push(merged);
-  saveConfig(getConfigPath(), config);
-  currentConfig = loadAppConfig();
-  return currentConfig.workflows;
+  try {
+    const config = currentConfig || loadAppConfig();
+    const merged = { ...WORKFLOW_DEFAULTS, ...workflow };
+    config.workflows.push(merged);
+    saveConfig(getConfigPath(), config);
+    currentConfig = loadAppConfig();
+    return { workflows: currentConfig.workflows };
+  } catch (err) {
+    console.error('[Watcher] Failed to add workflow:', err.message);
+    return { error: err.message };
+  }
 });
 
 ipcMain.handle('update-workflow', (_event, workflowName, updates) => {
