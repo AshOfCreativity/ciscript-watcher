@@ -1,29 +1,40 @@
 const { Notification, shell } = require('electron');
+const path = require('path');
 
-function setupNotifications(queue, serverUrl, config) {
+function setupNotifications(queue, serverUrl, workflow) {
+  const prefix = workflow && workflow.name ? `[${workflow.name}] ` : '';
+
   queue.on('file:detected', (filePath) => {
-    const path = require('path');
-    const title = config && config.requireApproval
-      ? 'Awaiting Approval'
-      : 'New Recording Detected';
     new Notification({
-      title,
+      title: `${prefix}New File Detected`,
+      body: `${path.basename(filePath)} — awaiting approval`
+    }).show();
+  });
+
+  queue.on('file:extracting', (filePath) => {
+    new Notification({
+      title: `${prefix}Extraction Started`,
       body: path.basename(filePath)
     }).show();
   });
 
-  queue.on('file:uploading', (filePath) => {
-    const path = require('path');
+  queue.on('file:awaiting-upload', (filePath) => {
     new Notification({
-      title: 'Audio Extracted, Uploading...',
+      title: `${prefix}Extraction Complete`,
+      body: `${path.basename(filePath)} — awaiting upload approval`
+    }).show();
+  });
+
+  queue.on('file:uploading', (filePath) => {
+    new Notification({
+      title: `${prefix}Uploading`,
       body: path.basename(filePath)
     }).show();
   });
 
   queue.on('file:completed', (filePath, info) => {
-    const path = require('path');
     const notification = new Notification({
-      title: 'Transcription Complete',
+      title: `${prefix}Transcription Complete`,
       body: `${path.basename(filePath)} — ${info.speakers} speaker${info.speakers !== 1 ? 's' : ''}, ${info.segments} segments`
     });
     notification.on('click', () => {
@@ -33,10 +44,17 @@ function setupNotifications(queue, serverUrl, config) {
   });
 
   queue.on('file:failed', (filePath, err) => {
-    const path = require('path');
     new Notification({
-      title: 'Processing Failed',
+      title: `${prefix}Processing Failed`,
       body: `${path.basename(filePath)}: ${err.message}`
+    }).show();
+  });
+
+  queue.on('file:retrying', (filePath, err) => {
+    const msg = err ? err.message : 'unknown error';
+    new Notification({
+      title: `${prefix}Retrying`,
+      body: `${path.basename(filePath)}: ${msg}`
     }).show();
   });
 }

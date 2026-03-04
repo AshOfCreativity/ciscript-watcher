@@ -1,7 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-const { DEFAULTS } = require('./lib/config');
+const { WORKFLOW_DEFAULTS, GLOBAL_DEFAULTS } = require('./lib/config');
 
 const PORT = 3001;
 const CONFIG_PATH = path.join(__dirname, 'watcher-config.json');
@@ -9,9 +9,9 @@ const CONFIG_PATH = path.join(__dirname, 'watcher-config.json');
 function readConfig() {
   try {
     const raw = fs.readFileSync(CONFIG_PATH, 'utf-8');
-    return { ...DEFAULTS, ...JSON.parse(raw) };
+    return JSON.parse(raw);
   } catch {
-    return { ...DEFAULTS };
+    return { workflows: [{ ...WORKFLOW_DEFAULTS }], global: { ...GLOBAL_DEFAULTS } };
   }
 }
 
@@ -56,9 +56,8 @@ const server = http.createServer((req, res) => {
   let filePath;
 
   if (req.url === '/' || req.url === '/index.html') {
-    filePath = path.join(electronDir, 'settings.html');
+    filePath = path.join(electronDir, 'app.html');
   } else {
-    // Prevent path traversal
     const safePath = path.normalize(req.url).replace(/^(\.\.[\/\\])+/, '');
     filePath = path.join(electronDir, safePath);
   }
@@ -78,5 +77,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, '0.0.0.0', () => {
-  console.log(`Watcher Settings UI: http://localhost:${PORT}`);
+  console.log(`Watcher UI: http://localhost:${PORT}`);
 });

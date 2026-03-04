@@ -13,12 +13,146 @@
       color: #e0e0e0;
       font-size: 14px;
       display: flex;
-      flex-direction: column;
       height: 100vh;
       overflow: hidden;
     }
 
-    /* Tabs */
+    /* ─── Sidebar ─── */
+    .sidebar {
+      width: 220px;
+      min-width: 220px;
+      background: #0f0f23;
+      border-right: 1px solid #333;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-header {
+      padding: 16px;
+      border-bottom: 1px solid #333;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sidebar-header h3 {
+      font-size: 13px;
+      font-weight: 600;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-add-workflow {
+      width: 24px;
+      height: 24px;
+      border: 1px solid #555;
+      border-radius: 4px;
+      background: none;
+      color: #888;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-add-workflow:hover {
+      background: #16213e;
+      color: #e0e0e0;
+      border-color: #4a6fa5;
+    }
+
+    .workflow-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 0;
+    }
+
+    .workflow-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      cursor: pointer;
+      border-left: 3px solid transparent;
+      transition: all 0.15s;
+    }
+
+    .workflow-item:hover {
+      background: #16213e;
+    }
+
+    .workflow-item.active {
+      background: #16213e;
+      border-left-color: #4a6fa5;
+    }
+
+    .workflow-status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .workflow-status-dot.running {
+      background: #22c55e;
+    }
+
+    .workflow-status-dot.stopped {
+      background: #6b7280;
+    }
+
+    .workflow-name {
+      font-size: 13px;
+      font-weight: 500;
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .workflow-toggle {
+      width: 20px;
+      height: 20px;
+      border: none;
+      background: none;
+      color: #888;
+      cursor: pointer;
+      font-size: 14px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .workflow-toggle:hover {
+      background: #2a3a5c;
+      color: #e0e0e0;
+    }
+
+    .sidebar-footer {
+      padding: 12px 16px;
+      border-top: 1px solid #333;
+      display: flex;
+      gap: 6px;
+    }
+
+    .sidebar-footer .btn-sm {
+      flex: 1;
+    }
+
+    /* ─── Main area ─── */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Tab bar */
     .tab-bar {
       display: flex;
       background: #0f0f23;
@@ -27,13 +161,12 @@
     }
 
     .tab-btn {
-      flex: 1;
-      padding: 12px 16px;
+      padding: 10px 20px;
       background: none;
       border: none;
       border-bottom: 2px solid transparent;
       color: #888;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s;
@@ -49,145 +182,202 @@
       border-bottom-color: #4a6fa5;
     }
 
+    .tab-count {
+      font-size: 11px;
+      background: rgba(74, 111, 165, 0.2);
+      color: #4a6fa5;
+      padding: 1px 6px;
+      border-radius: 8px;
+      margin-left: 6px;
+    }
+
     /* Tab content */
     .tab-content {
       display: none;
       flex: 1;
       overflow-y: auto;
-      padding: 20px 24px;
+      flex-direction: column;
     }
 
     .tab-content.active {
-      display: block;
+      display: flex;
     }
 
-    /* Queue tab */
-    .queue-header {
-      display: flex;
-      justify-content: space-between;
+    /* ─── Selection toolbar ─── */
+    .selection-toolbar {
+      display: none;
       align-items: center;
-      margin-bottom: 16px;
-    }
-
-    .queue-header h2 {
-      font-size: 16px;
-      font-weight: 600;
-      color: #fff;
-    }
-
-    .queue-actions {
-      display: flex;
       gap: 8px;
+      padding: 8px 16px;
+      background: #1e2a4a;
+      border-bottom: 1px solid #4a6fa5;
+      flex-shrink: 0;
     }
 
+    .selection-toolbar.visible {
+      display: flex;
+    }
+
+    .selection-count {
+      font-size: 12px;
+      color: #4a6fa5;
+      font-weight: 600;
+      margin-right: 8px;
+    }
+
+    /* ─── Buttons ─── */
     .btn-sm {
-      padding: 6px 12px;
+      padding: 5px 10px;
       border: none;
       border-radius: 4px;
       cursor: pointer;
       font-size: 12px;
       font-weight: 500;
       transition: background 0.2s;
+      white-space: nowrap;
     }
 
-    .btn-approve-all {
+    .btn-primary {
       background: #4a6fa5;
       color: #fff;
     }
 
-    .btn-approve-all:hover {
+    .btn-primary:hover {
       background: #5a7fb5;
     }
 
-    .btn-approve-all:disabled {
+    .btn-primary:disabled {
       background: #333;
       color: #666;
       cursor: default;
     }
 
-    .btn-clear-done {
+    .btn-success {
+      background: #22c55e;
+      color: #fff;
+    }
+
+    .btn-success:hover {
+      background: #16a34a;
+    }
+
+    .btn-danger {
+      background: #6b7280;
+      color: #fff;
+    }
+
+    .btn-danger:hover {
+      background: #ef4444;
+    }
+
+    .btn-ghost {
       background: #2a3a5c;
       color: #e0e0e0;
     }
 
-    .btn-clear-done:hover {
+    .btn-ghost:hover {
       background: #3a4a6c;
     }
 
-    /* File list */
-    .file-list {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .file-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      background: #16213e;
-      border-radius: 6px;
-      border-left: 3px solid #333;
-    }
-
-    .file-row.status-awaiting_approval {
-      border-left-color: #f59e0b;
-    }
-
-    .file-row.status-pending,
-    .file-row.status-extracting,
-    .file-row.status-uploading,
-    .file-row.status-polling {
-      border-left-color: #3b82f6;
-    }
-
-    .file-row.status-completed {
-      border-left-color: #22c55e;
-    }
-
-    .file-row.status-failed {
-      border-left-color: #ef4444;
-    }
-
-    .file-row.status-rejected {
-      border-left-color: #6b7280;
-      opacity: 0.6;
-    }
-
-    .file-info {
+    /* ─── File table ─── */
+    .file-table-wrap {
       flex: 1;
-      min-width: 0;
+      overflow-y: auto;
+      padding: 12px 16px;
     }
 
-    .file-name {
+    .file-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .file-table th {
+      text-align: left;
+      font-size: 11px;
+      font-weight: 600;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 8px 10px;
+      border-bottom: 1px solid #333;
+      position: sticky;
+      top: 0;
+      background: #1a1a2e;
+      z-index: 1;
+    }
+
+    .file-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #222;
       font-size: 13px;
-      font-weight: 500;
-      color: #e0e0e0;
+      vertical-align: middle;
+    }
+
+    .file-table tr:hover td {
+      background: #16213e;
+    }
+
+    .file-table tr.selected td {
+      background: rgba(74, 111, 165, 0.15);
+    }
+
+    .file-table .cb-cell {
+      width: 30px;
+    }
+
+    .file-table input[type="checkbox"] {
+      cursor: pointer;
+      accent-color: #4a6fa5;
+    }
+
+    .file-name-cell {
+      max-width: 260px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    .file-meta {
-      font-size: 11px;
-      color: #888;
-      margin-top: 2px;
+    .file-workflow-badge {
+      display: inline-block;
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 8px;
+      background: rgba(74, 111, 165, 0.15);
+      color: #4a6fa5;
+      margin-left: 6px;
     }
 
+    .file-date-cell {
+      color: #888;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .file-size-cell {
+      color: #888;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    /* Status badges */
     .status-badge {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 600;
-      padding: 3px 8px;
+      padding: 2px 8px;
       border-radius: 10px;
       white-space: nowrap;
       text-transform: uppercase;
       letter-spacing: 0.3px;
     }
 
-    .badge-awaiting {
+    .badge-detected {
       background: rgba(245, 158, 11, 0.15);
       color: #f59e0b;
+    }
+
+    .badge-awaiting-upload {
+      background: rgba(168, 85, 247, 0.15);
+      color: #a855f7;
     }
 
     .badge-active {
@@ -210,40 +400,13 @@
       color: #6b7280;
     }
 
-    .file-actions {
-      display: flex;
-      gap: 6px;
-      flex-shrink: 0;
+    .error-text {
+      font-size: 11px;
+      color: #ef4444;
+      margin-top: 2px;
     }
 
-    .btn-action {
-      padding: 4px 10px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 12px;
-      font-weight: 500;
-      transition: background 0.2s;
-    }
-
-    .btn-action-approve {
-      background: #22c55e;
-      color: #fff;
-    }
-
-    .btn-action-approve:hover {
-      background: #16a34a;
-    }
-
-    .btn-action-reject {
-      background: #6b7280;
-      color: #fff;
-    }
-
-    .btn-action-reject:hover {
-      background: #ef4444;
-    }
-
+    /* ─── Empty state ─── */
     .empty-state {
       text-align: center;
       padding: 48px 24px;
@@ -252,82 +415,79 @@
     }
 
     .empty-state p:first-child {
-      font-size: 24px;
+      font-size: 20px;
       margin-bottom: 8px;
     }
 
-    /* Settings tab — reuse existing styles */
-    .form-group {
+    /* ─── Settings panel ─── */
+    .settings-panel {
+      padding: 20px 24px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .settings-panel h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
       margin-bottom: 16px;
     }
 
-    label {
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
       display: block;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 500;
       color: #aaa;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
 
     input[type="text"],
     input[type="number"],
-    input[type="url"] {
+    input[type="url"],
+    select {
       width: 100%;
-      padding: 8px 12px;
+      padding: 7px 10px;
       background: #16213e;
       border: 1px solid #333;
-      border-radius: 6px;
+      border-radius: 5px;
       color: #e0e0e0;
-      font-size: 14px;
+      font-size: 13px;
       outline: none;
       transition: border-color 0.2s;
     }
 
-    input:focus {
+    input:focus, select:focus {
       border-color: #4a6fa5;
     }
 
     .folder-row {
       display: flex;
-      gap: 8px;
+      gap: 6px;
     }
 
     .folder-row input {
       flex: 1;
     }
 
-    .btn {
-      padding: 8px 16px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 500;
-      transition: background 0.2s;
-    }
-
     .btn-browse {
+      padding: 7px 12px;
       background: #2a3a5c;
       color: #e0e0e0;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 13px;
       white-space: nowrap;
     }
 
     .btn-browse:hover {
       background: #3a4a6c;
-    }
-
-    .btn-save {
-      background: #4a6fa5;
-      color: #fff;
-      width: 100%;
-      padding: 10px;
-      margin-top: 24px;
-    }
-
-    .btn-save:hover {
-      background: #5a7fb5;
     }
 
     .toggle-group {
@@ -338,8 +498,8 @@
 
     .toggle {
       position: relative;
-      width: 40px;
-      height: 22px;
+      width: 36px;
+      height: 20px;
       -webkit-app-region: no-drag;
     }
 
@@ -353,7 +513,7 @@
       position: absolute;
       inset: 0;
       background: #333;
-      border-radius: 11px;
+      border-radius: 10px;
       cursor: pointer;
       transition: background 0.2s;
     }
@@ -361,8 +521,8 @@
     .toggle-slider::before {
       content: '';
       position: absolute;
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
       left: 3px;
       top: 3px;
       background: #e0e0e0;
@@ -375,35 +535,21 @@
     }
 
     .toggle input:checked + .toggle-slider::before {
-      transform: translateX(18px);
+      transform: translateX(16px);
     }
 
     .toggle-label {
-      font-size: 14px;
+      font-size: 13px;
       color: #e0e0e0;
     }
 
     .row {
       display: flex;
-      gap: 16px;
+      gap: 12px;
     }
 
     .row .form-group {
       flex: 1;
-    }
-
-    .status-bar {
-      margin-top: 16px;
-      padding: 8px 12px;
-      background: #16213e;
-      border-radius: 6px;
-      font-size: 12px;
-      color: #888;
-      text-align: center;
-    }
-
-    .status-bar.success {
-      color: #4caf50;
     }
 
     .section-label {
@@ -412,138 +558,193 @@
       color: #666;
       text-transform: uppercase;
       letter-spacing: 1px;
-      margin-top: 20px;
-      margin-bottom: 12px;
+      margin-top: 18px;
+      margin-bottom: 10px;
       padding-bottom: 6px;
       border-bottom: 1px solid #222;
+    }
+
+    .btn-save {
+      background: #4a6fa5;
+      color: #fff;
+      width: 100%;
+      padding: 9px;
+      margin-top: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .btn-save:hover {
+      background: #5a7fb5;
+    }
+
+    .btn-delete-workflow {
+      background: none;
+      color: #ef4444;
+      border: 1px solid #ef4444;
+      width: 100%;
+      padding: 9px;
+      margin-top: 8px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .btn-delete-workflow:hover {
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    .status-bar {
+      margin-top: 12px;
+      padding: 6px 10px;
+      background: #16213e;
+      border-radius: 5px;
+      font-size: 11px;
+      color: #888;
+      text-align: center;
+    }
+
+    .status-bar.success {
+      color: #4caf50;
+    }
+
+    /* ─── No workflow selected ─── */
+    .no-workflow-msg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: #555;
+      font-size: 15px;
     }
   </style>
 </head>
 <body>
-  <div class="tab-bar">
-    <button class="tab-btn active" data-tab="queue">Queue</button>
-    <button class="tab-btn" data-tab="settings">Settings</button>
-  </div>
-
-  <!-- Queue Tab -->
-  <div id="tab-queue" class="tab-content active">
-    <div class="queue-header">
-      <h2>File Queue</h2>
-      <div class="queue-actions">
-        <button class="btn-sm btn-approve-all" id="btnApproveAll" disabled>Approve All</button>
-        <button class="btn-sm btn-clear-done" id="btnClearDone">Clear Done</button>
-      </div>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h3>Workflows</h3>
+      <button class="btn-add-workflow" id="btnAddWorkflow" title="Add workflow">+</button>
     </div>
-    <div class="file-list" id="fileList">
-      <div class="empty-state">
-        <p>No files detected yet</p>
-        <p>Drop video files into your watch folder to get started</p>
-      </div>
+    <div class="workflow-list" id="workflowList"></div>
+    <div class="sidebar-footer">
+      <button class="btn-sm btn-primary" id="btnStartAll">Start All</button>
+      <button class="btn-sm btn-ghost" id="btnStopAll">Stop All</button>
     </div>
   </div>
 
-  <!-- Settings Tab -->
-  <div id="tab-settings" class="tab-content">
-    <div class="form-group">
-      <label>Watch Folder</label>
-      <div class="folder-row">
-        <input type="text" id="watchFolder" placeholder="~/Videos">
-        <button class="btn btn-browse" id="btnBrowse">Browse</button>
-      </div>
+  <!-- Main area -->
+  <div class="main" id="mainArea">
+    <div class="no-workflow-msg" id="noWorkflowMsg">
+      Select or create a workflow to begin
     </div>
 
-    <div class="form-group">
-      <label>Server URL</label>
-      <input type="url" id="serverUrl" placeholder="http://localhost:3000">
-    </div>
-
-    <div class="form-group">
-      <label>Extensions (comma-separated)</label>
-      <input type="text" id="extensions" placeholder=".mp4, .mkv, .webm, .flv, .mov, .avi">
-    </div>
-
-    <div class="row">
-      <div class="form-group">
-        <label>Max Concurrent</label>
-        <input type="number" id="maxConcurrent" min="1" max="10" value="1">
+    <!-- Workflow content (hidden until a workflow is selected) -->
+    <div id="workflowContent" style="display:none; flex:1; flex-direction:column;">
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="videos">Videos <span class="tab-count" id="videosCount">0</span></button>
+        <button class="tab-btn" data-tab="audio">Audio <span class="tab-count" id="audioCount">0</span></button>
+        <button class="tab-btn" data-tab="settings">Settings</button>
       </div>
-      <div class="form-group">
-        <label>Max Retries</label>
-        <input type="number" id="maxRetries" min="1" max="20" value="5">
+
+      <!-- Videos Tab -->
+      <div id="tab-videos" class="tab-content active">
+        <div class="selection-toolbar" id="videosToolbar">
+          <span class="selection-count" id="videosSelCount">0 selected</span>
+          <button class="btn-sm btn-success" id="btnApproveSelected">Approve</button>
+          <button class="btn-sm btn-danger" id="btnRejectSelected">Reject</button>
+          <button class="btn-sm btn-ghost" id="btnSelectAllVideos">Select All</button>
+          <button class="btn-sm btn-ghost" id="btnDeselectAllVideos">Deselect</button>
+        </div>
+        <div class="file-table-wrap">
+          <table class="file-table">
+            <thead>
+              <tr>
+                <th class="cb-cell"><input type="checkbox" id="cbSelectAllVideos"></th>
+                <th>File</th>
+                <th>Size</th>
+                <th>Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="videosBody"></tbody>
+          </table>
+          <div class="empty-state" id="videosEmpty" style="display:none">
+            <p>No videos detected</p>
+            <p>Start the workflow and add files to the watch folder</p>
+          </div>
+        </div>
       </div>
-      <div class="form-group">
-        <label>Min Disk Space (GB)</label>
-        <input type="number" id="minDiskSpaceGB" min="0" step="0.5" value="2">
+
+      <!-- Audio Tab -->
+      <div id="tab-audio" class="tab-content">
+        <div class="selection-toolbar" id="audioToolbar">
+          <span class="selection-count" id="audioSelCount">0 selected</span>
+          <button class="btn-sm btn-success" id="btnApproveUpload">Approve Upload</button>
+          <button class="btn-sm btn-danger" id="btnRejectAudio">Reject</button>
+          <button class="btn-sm btn-ghost" id="btnSelectAllAudio">Select All</button>
+          <button class="btn-sm btn-ghost" id="btnDeselectAllAudio">Deselect</button>
+          <button class="btn-sm btn-ghost" id="btnClearDone">Clear Done</button>
+        </div>
+        <div class="file-table-wrap">
+          <table class="file-table">
+            <thead>
+              <tr>
+                <th class="cb-cell"><input type="checkbox" id="cbSelectAllAudio"></th>
+                <th>File</th>
+                <th>Size</th>
+                <th>Status</th>
+                <th>Job</th>
+              </tr>
+            </thead>
+            <tbody id="audioBody"></tbody>
+          </table>
+          <div class="empty-state" id="audioEmpty" style="display:none">
+            <p>No audio files</p>
+            <p>Approve videos to start extraction</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings Tab -->
+      <div id="tab-settings" class="tab-content">
+        <div class="settings-panel" id="settingsPanel">
+          <!-- Filled dynamically -->
+        </div>
       </div>
     </div>
-
-    <div class="form-group">
-      <div class="toggle-group">
-        <label class="toggle">
-          <input type="checkbox" id="deleteWavAfterUpload">
-          <span class="toggle-slider"></span>
-        </label>
-        <span class="toggle-label">Delete WAV after upload</span>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="toggle-group">
-        <label class="toggle">
-          <input type="checkbox" id="processExisting">
-          <span class="toggle-slider"></span>
-        </label>
-        <span class="toggle-label">Process existing files on startup</span>
-      </div>
-    </div>
-
-    <div class="section-label">Approval &amp; File Control</div>
-
-    <div class="form-group">
-      <div class="toggle-group">
-        <label class="toggle">
-          <input type="checkbox" id="requireApproval">
-          <span class="toggle-slider"></span>
-        </label>
-        <span class="toggle-label">Require approval before processing</span>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label>Output Directory (WAV extraction target)</label>
-      <div class="folder-row">
-        <input type="text" id="outputDir" placeholder="Default: next to source video">
-        <button class="btn btn-browse" id="btnBrowseOutput">Browse</button>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label>Archive Directory (move originals after success)</label>
-      <div class="folder-row">
-        <input type="text" id="archiveDir" placeholder="Default: leave in place">
-        <button class="btn btn-browse" id="btnBrowseArchive">Browse</button>
-      </div>
-    </div>
-
-    <button class="btn btn-save" id="btnSave">Save Settings</button>
-    <div class="status-bar" id="statusBar">Ready</div>
   </div>
 
   <script>
-    // Web shim — only active when not running in Electron (preload sets window.watcherAPI)
+    // Web shim for dev server without Electron
     if (!window.watcherAPI) {
       window.watcherAPI = {
         getConfig: () => fetch('/api/config').then(r => r.json()),
-        saveConfig: (cfg) => fetch('/api/config', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(cfg)
-        }).then(r => r.json()),
+        saveConfig: (cfg) => fetch('/api/config', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(cfg) }).then(r => r.json()),
+        getGlobalConfig: () => Promise.resolve({}),
+        saveGlobalConfig: () => Promise.resolve({}),
+        getWorkflows: () => Promise.resolve([]),
+        addWorkflow: () => Promise.resolve([]),
+        updateWorkflow: () => Promise.resolve([]),
+        removeWorkflow: () => Promise.resolve([]),
+        startWorkflow: () => Promise.resolve(),
+        stopWorkflow: () => Promise.resolve(),
+        startAll: () => Promise.resolve(),
+        stopAll: () => Promise.resolve(),
         browseFolder: () => Promise.resolve(prompt('Enter folder path:')),
-        getQueue: () => fetch('/api/queue').then(r => r.json()).catch(() => []),
-        approveFile: () => Promise.resolve(),
-        rejectFile: () => Promise.resolve(),
-        approveAll: () => Promise.resolve(),
+        getQueue: () => Promise.resolve([]),
+        getVideoFiles: () => Promise.resolve([]),
+        getAudioFiles: () => Promise.resolve([]),
+        approveFiles: () => Promise.resolve(),
+        approveUploadFiles: () => Promise.resolve(),
+        rejectFiles: () => Promise.resolve(),
+        requeueFiles: () => Promise.resolve(),
+        approveAllVideos: () => Promise.resolve(),
+        approveAllUploads: () => Promise.resolve(),
         onQueueUpdated: () => {},
         removeQueueListener: () => {}
       };
