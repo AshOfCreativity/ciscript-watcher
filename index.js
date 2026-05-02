@@ -1,6 +1,7 @@
 const { spawn } = require('child_process');
 const { loadConfig } = require('./lib/config');
 const { startWatcher } = require('./lib/watcher');
+const { ffmpegBin } = require('./lib/extractor');
 
 function timestamp() {
   return new Date().toISOString();
@@ -36,10 +37,10 @@ Options:
 
 function checkFfmpeg() {
   return new Promise((resolve, reject) => {
-    const proc = spawn('ffmpeg', ['-version'], { stdio: ['ignore', 'pipe', 'pipe'] });
+    const proc = spawn(ffmpegBin, ['-version'], { stdio: ['ignore', 'pipe', 'pipe'] });
 
     proc.on('error', () => {
-      reject(new Error('ffmpeg not found in PATH. Please install ffmpeg.'));
+      reject(new Error(`ffmpeg not found at "${ffmpegBin}". Bundled ffmpeg failed to load and none on PATH.`));
     });
 
     proc.on('close', (code) => {
