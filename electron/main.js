@@ -1,11 +1,24 @@
 const { app, Tray, Menu, BrowserWindow, ipcMain, dialog, nativeImage } = require('electron');
 const { autoUpdater } = require('electron-updater');
+const log = require('electron-log');
 const path = require('path');
 const fs = require('fs');
 const { loadConfig, saveConfig, WORKFLOW_DEFAULTS } = require('../lib/config');
 const { startWatcher, startWorkflowWatcher } = require('../lib/watcher');
 const { setupNotifications } = require('./notifications');
 const db = require('../lib/db');
+
+log.transports.file.level = 'info';
+autoUpdater.logger = log;
+autoUpdater.autoDownload = true;
+autoUpdater.autoInstallOnAppQuit = true;
+
+autoUpdater.on('checking-for-update', () => log.info('[updater] checking for update'));
+autoUpdater.on('update-available', (info) => log.info('[updater] update available:', info.version));
+autoUpdater.on('update-not-available', (info) => log.info('[updater] up to date:', info.version));
+autoUpdater.on('error', (err) => log.error('[updater] error:', err));
+autoUpdater.on('download-progress', (p) => log.info(`[updater] download ${Math.round(p.percent)}%`));
+autoUpdater.on('update-downloaded', (info) => log.info('[updater] downloaded, will install on quit:', info.version));
 
 // Single instance lock
 const gotTheLock = app.requestSingleInstanceLock();
