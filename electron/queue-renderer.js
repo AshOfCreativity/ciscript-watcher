@@ -38,7 +38,7 @@ function statusLabel(status) {
     case 'extracting': return 'Extracting';
     case 'uploading': return 'Uploading';
     case 'polling': return 'Processing';
-    case 'awaiting_upload': return 'Awaiting Upload';
+    case 'awaiting_upload': return 'Ready';
     case 'completed': return 'Done';
     case 'failed': return 'Failed';
     case 'rejected': return 'Rejected';
@@ -423,6 +423,13 @@ $('btnApproveUpload').addEventListener('click', async () => {
 $('btnRejectAudio').addEventListener('click', async () => {
   if (audioSelection.size === 0) return;
   await window.watcherAPI.rejectFiles([...audioSelection]);
+  audioSelection.clear();
+  await refreshFiles();
+});
+
+$('btnRequeueAudio').addEventListener('click', async () => {
+  if (audioSelection.size === 0) return;
+  await window.watcherAPI.requeueFiles([...audioSelection]);
   audioSelection.clear();
   await refreshFiles();
 });

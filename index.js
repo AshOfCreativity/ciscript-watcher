@@ -77,12 +77,12 @@ async function main() {
   console.log(`[INFO]  ${timestamp()} Audio Watcher v3.0 starting`);
   console.log(`[INFO]  ${timestamp()} Workflows: ${config.workflows.length}`);
   for (const wf of config.workflows) {
-    console.log(`[INFO]  ${timestamp()}   "${wf.name}": ${wf.watchFolder} → ${wf.serverUrl} (${wf.approvalMode})`);
+    console.log(`[INFO]  ${timestamp()}   "${wf.name}": ${wf.watchFolder} → ${wf.serverUrl}`);
   }
   console.log(`[INFO]  ${timestamp()} Max concurrent: ${config.global.maxConcurrent}`);
   console.log(`[INFO]  ${timestamp()} Max retries: ${config.global.maxRetries}`);
   console.log(`[INFO]  ${timestamp()} Database: ${config.global.dbPath}`);
-  console.log(`[INFO]  ${timestamp()} Approval-first mode: files require explicit approval`);
+  console.log(`[INFO]  ${timestamp()} Mode: extract then upload (both require approval)`);
   console.log(`[INFO]  ${timestamp()} Scanning watch folders...`);
 
   const system = startWatcher(config);

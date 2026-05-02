@@ -655,7 +655,7 @@
       <div id="tab-videos" class="tab-content active">
         <div class="selection-toolbar" id="videosToolbar">
           <span class="selection-count" id="videosSelCount">0 selected</span>
-          <button class="btn-sm btn-success" id="btnApproveSelected">Approve</button>
+          <button class="btn-sm btn-success" id="btnApproveSelected">Extract Audio</button>
           <button class="btn-sm btn-danger" id="btnRejectSelected">Reject</button>
           <button class="btn-sm btn-ghost" id="btnSelectAllVideos">Select All</button>
           <button class="btn-sm btn-ghost" id="btnDeselectAllVideos">Deselect</button>
@@ -684,8 +684,9 @@
       <div id="tab-audio" class="tab-content">
         <div class="selection-toolbar" id="audioToolbar">
           <span class="selection-count" id="audioSelCount">0 selected</span>
-          <button class="btn-sm btn-success" id="btnApproveUpload">Approve Upload</button>
+          <button class="btn-sm btn-success" id="btnApproveUpload">Upload</button>
           <button class="btn-sm btn-danger" id="btnRejectAudio">Reject</button>
+          <button class="btn-sm btn-ghost" id="btnRequeueAudio">Requeue</button>
           <button class="btn-sm btn-ghost" id="btnSelectAllAudio">Select All</button>
           <button class="btn-sm btn-ghost" id="btnDeselectAllAudio">Deselect</button>
           <button class="btn-sm btn-ghost" id="btnClearDone">Clear Done</button>
@@ -705,7 +706,7 @@
           </table>
           <div class="empty-state" id="audioEmpty" style="display:none">
             <p>No audio files</p>
-            <p>Approve videos to start extraction</p>
+            <p>Extract audio from videos to see them here</p>
           </div>
         </div>
       </div>

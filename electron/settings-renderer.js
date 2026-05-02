@@ -32,15 +32,21 @@ function renderSettings() {
     </div>
 
     <div class="form-group">
+      <label>Account ID (from server)</label>
+      <input type="text" id="wfAccountId" value="${escHtml(wf.accountId || '')}" placeholder="Leave blank to auto-detect">
+    </div>
+
+    <div class="form-group">
       <label>Extensions (comma-separated)</label>
       <input type="text" id="wfExtensions" value="${(wf.extensions || []).join(', ')}" placeholder=".mp4, .mkv, .webm, .flv, .mov, .avi">
     </div>
 
     <div class="form-group">
-      <label>Approval Mode</label>
-      <select id="wfApprovalMode">
-        <option value="one-stage" ${wf.approvalMode === 'one-stage' ? 'selected' : ''}>One-stage (approve once → extract + upload)</option>
-        <option value="two-stage" ${wf.approvalMode === 'two-stage' ? 'selected' : ''}>Two-stage (approve extract, then approve upload)</option>
+      <label>Audio Format</label>
+      <select id="wfAudioFormat">
+        <option value="flac" ${(wf.audioFormat || 'flac') === 'flac' ? 'selected' : ''}>FLAC (lossless, smaller)</option>
+        <option value="wav" ${wf.audioFormat === 'wav' ? 'selected' : ''}>WAV (uncompressed)</option>
+        <option value="mp3" ${wf.audioFormat === 'mp3' ? 'selected' : ''}>MP3 (smallest, lossy)</option>
       </select>
     </div>
 
@@ -50,7 +56,7 @@ function renderSettings() {
           <input type="checkbox" id="wfDeleteWav" ${wf.deleteWavAfterUpload !== false ? 'checked' : ''}>
           <span class="toggle-slider"></span>
         </label>
-        <span class="toggle-label">Delete WAV after upload</span>
+        <span class="toggle-label">Delete extracted audio after upload</span>
       </div>
     </div>
 
@@ -101,12 +107,13 @@ function renderSettings() {
       name: $('wfName').value.trim(),
       watchFolder: $('wfWatchFolder').value.trim(),
       serverUrl: $('wfServerUrl').value.trim(),
+      accountId: $('wfAccountId').value.trim() || null,
       extensions: $('wfExtensions').value
         .split(',')
         .map(e => e.trim())
         .filter(Boolean)
         .map(e => e.startsWith('.') ? e : '.' + e),
-      approvalMode: $('wfApprovalMode').value,
+      audioFormat: $('wfAudioFormat').value,
       deleteWavAfterUpload: $('wfDeleteWav').checked,
       outputDir: $('wfOutputDir').value.trim() || null,
       archiveDir: $('wfArchiveDir').value.trim() || null

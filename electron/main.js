@@ -209,7 +209,6 @@ ipcMain.handle('get-workflows', () => {
     name: w.name,
     watchFolder: w.watchFolder,
     serverUrl: w.serverUrl,
-    approvalMode: w.approvalMode,
     running: !!(watcherSystem && watcherSystem.instances[w.name])
   }));
 });
